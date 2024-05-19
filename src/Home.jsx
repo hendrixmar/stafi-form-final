@@ -2,6 +2,7 @@ import React, {useEffect, useState} from "react";
 import "./index.css";
 import {useNavigate} from "react-router-dom"; // Import your styles
 import { useSearchParams } from 'react-router-dom';
+import Button from '@mui/material/Button';
 
 
 function Home() {
@@ -12,6 +13,10 @@ function Home() {
     const handleButtonClickNavigate = (data) => {
         console.log(data._id);
         navigate(`/forms/${data._id}?api-key=${apiKey}`);
+    };
+
+    const handleButtonClickCreate = () => {
+        navigate(`/forms?api-key=${apiKey}`);
     };
     const apiKey = searchParams.get('api-key');
 
@@ -86,53 +91,57 @@ function Home() {
     };
 
     return (
-        <div className="h-screen flex items-center justify-center">
 
-            <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-                <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-                <tr>
-                    <th scope="col" className="px-6 py-3">
-                        Product name
-                    </th>
-                    <th scope="col" className="px-6 py-3">
-                        Color
-                    </th>
-                    <th scope="col" className="px-6 py-3">
+        <div>
+            <Button variant="contained" onClick={() => handleButtonClickCreate()}>Create</Button>
+            <div className="h-screen flex items-center justify-center">
 
-                    </th>
-                    <th scope="col" className="px-6 py-3">
+                <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                    <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                    <tr>
+                        <th scope="col" className="px-6 py-3">
+                            company form
+                        </th>
+                        <th scope="col" className="px-6 py-3">
+                            Creation date
+                        </th>
+                        <th scope="col" className="px-6 py-3">
 
-                    </th>
+                        </th>
+                        <th scope="col" className="px-6 py-3">
 
-                </tr>
-                </thead>
-                <tbody>
-
-                {data.map((item, index) => (
-                    <tr key={index} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                        {
-                            ["person", "creation_date"].map(header => (
-                                    <td key={header} className="px-6 py-4">{item[header]}</td>
-                                )
-                            )
-
-                        }
-                        <td key={header} className="px-6 py-4">
-                            <button onClick={() => handleButtonClickNavigate(item)}>
-                                Edit
-                            </button>
-                        </td>
-                        <td key={header} className="px-6 py-4">
-                            <button onClick={() => handleButtonClick(item)}>
-                                Delete
-                            </button>
-                        </td>
+                        </th>
 
                     </tr>
+                    </thead>
+                    <tbody>
 
-                ))}
-                </tbody>
-            </table>
+                    {data.map((item, index) => (
+                        <tr key={index} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                            {
+                                ["person", "creation_date"].map(header => (
+                                        <td key={header} className="px-6 py-4">{item[header]}</td>
+                                    )
+                                )
+
+                            }
+                            <td key={header} className="px-6 py-4">
+                                <button onClick={() => handleButtonClickNavigate(item)}>
+                                    Edit
+                                </button>
+                            </td>
+                            <td key={header} className="px-6 py-4">
+                                <button onClick={() => handleButtonClick(item)}>
+                                    Delete
+                                </button>
+                            </td>
+
+                        </tr>
+
+                    ))}
+                    </tbody>
+                </table>
+            </div>
         </div>
 
     );
