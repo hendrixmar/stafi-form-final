@@ -3,8 +3,6 @@ export const json = {
   progressBarType: "pages",
   progressBarShowPageNumbers: true,
   progressBarShowPageTitles: true,
-  description:
-    "NPS (net promoter score) is a metric used to evaluate customer loyalty and business growth opportunities. To measure NPS, respondents should rate on a scale of 0 to 10 how likely they would recommend your product or service to a friend or colleague.",
   logo: "https://i0.wp.com/getstafi.com/wp-content/uploads/2022/05/getstafi_stafi-logo-az-512.png?fit=512%2C189&ssl=1",
   logoWidth: "auto",
   logoHeight: "80px",
@@ -56,7 +54,7 @@ export const json = {
         {
           name: "website",
           type: "text",
-          title: "Company Name",
+          title: "Website",
           inputType: "text",
           isRequired: true,
         },
@@ -69,7 +67,7 @@ export const json = {
           isRequired: true,
         },
         {
-          name: "company-name",
+          name: "business-nature",
           type: "text",
           title: "What is the nature of your business",
           inputType: "text",
@@ -287,9 +285,7 @@ export const json = {
           type: "text",
           title:
             "Do you agree with the following greeting or would you like to make any changes?",
-
-          defaultValue:
-            "Hi! Thank you for calling [Company Name]. My name is [Agent's Name]. Please, be aware that this call may be monitored or recorded for quality assurance purposes.  How can I assist you today?",
+          defaultValue: "Hi! Thank you for calling [Company Name].?",
           inputType: "text",
           isRequired: true,
         },
@@ -418,7 +414,7 @@ export const json = {
         {
           type: "text",
           name: "email-send-information",
-          visibleIf: "{receive-information} = 'email-information'",
+          visibleIf: "{receive-information} = 'stafi-live-interface'",
           isRequired: true,
           title: {
             default: "Which email/User ID would you prefer to use for accessing our Stafi Live interface? ",

@@ -6,8 +6,10 @@ function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/dashboard" element={<Home />} />
-        <Route path="/create" element={<About />} />
+        <Route path="/" element={<Home />} />
+        <Route path="/forms/:userId" element={<About />} />
+        <Route path="/forms" element={<About />} />
+
       </Routes>
     </Router>
   );

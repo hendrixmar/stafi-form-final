@@ -1,56 +1,143 @@
-import React, { useEffect, useState } from "react";
-import "./index.css"; // Import your styles
+import React, {useEffect, useState} from "react";
+import "./index.css";
+import {useNavigate} from "react-router-dom"; // Import your styles
+import { useSearchParams } from 'react-router-dom';
+
+
+
 
 function Home() {
-  const url = "https://stafi-86f4.restdb.io/rest/forms";
-  const headers = {
-    "Content-Type": "application/json",
-    "x-apikey": "6648786e4a707d5838fd44d8",
-  };
-  const [data, setData] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
 
-  useEffect(() => {
-    // Define the async function to fetch data
-    const fetchData = async () => {
-      try {
-        const response = await fetch(url, {
-          method: "GET", // or 'POST', 'PUT', 'DELETE', etc.
-          headers: headers,
-        });
-        if (!response.ok) {
-          throw new Error("Network response was not ok");
+    const navigate = useNavigate();
+    const [searchParams] = useSearchParams();
+
+    const handleButtonClickNavigate = (data) => {
+        console.log(data._id);
+        navigate(`/forms/${data._id}?api-key=${apiKey}`);
+    };
+    const apiKey = searchParams.get('api-key');
+
+    const url = "https://stafi-86f4.restdb.io/rest/forms";
+    const headers = {
+        "Content-Type": "application/json",
+        "x-apikey": apiKey,
+    };
+    const [data, setData] = useState(null);
+    const [header, setHeaders] = useState(null);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
+
+    useEffect(() => {
+        // Define the async function to fetch data
+        const fetchData = async () => {
+            try {
+                const response = await fetch(url, {
+                    method: "GET", // or 'POST', 'PUT', 'DELETE', etc.
+                    headers: headers,
+                });
+                if (!response.ok) {
+                    console.log("SDAUHSDJASHDJASHSJ");
+                    throw new Error(`Network response was dasdasnot ok ${temp}`);
+                }
+                const result = await response.json();
+                setData(result);
+
+
+            } catch (error) {
+                setError(error.message);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        // Call the fetchData function
+        fetchData();
+    }, []);
+
+    if (loading) {
+        return <div>Loading...</div>;
+    }
+
+    if (error) {
+        return <div>Error: {error}</div>;
+    }
+
+    const handleButtonClick = async (data) => {
+        setLoading(true);
+        setError(null);
+
+        try {
+            const response = await fetch(
+                `https://stafi-86f4.restdb.io/rest/forms/${data._id}`,
+                {
+                    method: "DELETE", // or 'POST', 'PUT', 'DELETE', etc.
+                    headers: headers,
+                }
+            );
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            const result = await response.json();
+            setData(result);
+        } catch (error) {
+            setError(error.message);
+        } finally {
+            setLoading(false);
+            navigate(`/?api-key=${apiKey}`);
         }
-        const result = await response.json();
-        setData(result);
-      } catch (error) {
-        setError(error.message);
-      } finally {
-        setLoading(false);
-      }
     };
 
-    // Call the fetchData function
-    fetchData();
-  }, []);
+    return (
+        <div className="h-screen flex items-center justify-center">
 
-  if (loading) {
-    return <div>Loading...</div>;
-  }
+            <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                <tr>
+                    <th scope="col" className="px-6 py-3">
+                        Product name
+                    </th>
+                    <th scope="col" className="px-6 py-3">
+                        Color
+                    </th>
+                    <th scope="col" className="px-6 py-3">
 
-  if (error) {
-    return <div>Error: {error}</div>;
-  }
+                    </th>
+                    <th scope="col" className="px-6 py-3">
 
-  return (
-    <div class="h-56 grid grid-cols-3 gap-4 content-start ...">
-      <div>01</div>
-      <div>02</div>
-      <div>03</div>
-      <div>04</div>
-      <div>05</div>
-    </div>
-  );
+                    </th>
+
+                </tr>
+                </thead>
+                <tbody>
+
+                {data.map((item, index) => (
+                    <tr key={index} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                        {
+                            ["person", "creation_date"].map(header => (
+                                    <td key={header} className="px-6 py-4">{item[header]}</td>
+                                )
+                            )
+
+                        }
+                        <td key={header} className="px-6 py-4">
+                            <button onClick={() => handleButtonClickNavigate(item)}>
+                                Edit
+                            </button>
+                        </td>
+                        <td key={header} className="px-6 py-4">
+                            <button onClick={() => handleButtonClick(item)}>
+                                Delete
+                            </button>
+                        </td>
+
+                    </tr>
+
+                ))}
+                </tbody>
+            </table>
+        </div>
+
+    );
 }
+
 export default Home;
