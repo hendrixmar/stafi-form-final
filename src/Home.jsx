@@ -126,14 +126,15 @@ function Home() {
 
                             }
                             <td key={header} className="px-6 py-4">
-                                <button onClick={() => handleButtonClickNavigate(item)}>
+                                <Button variant="contained" onClick={() => handleButtonClickNavigate(item)}>
                                     Edit
-                                </button>
+                                </Button>
                             </td>
                             <td key={header} className="px-6 py-4">
-                                <button onClick={() => handleButtonClick(item)}>
+
+                                <Button variant="contained" onClick={() => handleButtonClick(item)}>
                                     Delete
-                                </button>
+                                </Button>
                             </td>
 
                         </tr>
