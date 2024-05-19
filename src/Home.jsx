@@ -4,8 +4,6 @@ import {useNavigate} from "react-router-dom"; // Import your styles
 import { useSearchParams } from 'react-router-dom';
 
 
-
-
 function Home() {
 
     const navigate = useNavigate();
