@@ -43,6 +43,8 @@ export const json = {
           title: "Person filling the form",
           inputType: "text",
           isRequired: true,
+          maxLength: 50
+
         },
         {
           name: "company-name",
@@ -50,6 +52,8 @@ export const json = {
           title: "Company Name",
           inputType: "text",
           isRequired: true,
+          maxLength: 50
+
         },
         {
           name: "website",
@@ -57,6 +61,8 @@ export const json = {
           title: "Website",
           inputType: "text",
           isRequired: true,
+          maxLength: 100
+
         },
         {
           name: "office-address",
@@ -65,6 +71,8 @@ export const json = {
           title: "Office Address",
           inputType: "text",
           isRequired: true,
+          maxLength: 100
+
         },
         {
           name: "business-nature",
@@ -75,17 +83,37 @@ export const json = {
         },
         {
           name: "number-employees",
-          type: "text",
+          type: "number",
           title: "How many employees do you have?",
-          inputType: "text",
+          inputType: "number",
+          isRequired: true,
+          validators: [{
+            "type": "numeric",
+            "text": "Value must be within the range of 0 to 100",
+            "minValue": 1,
+            "maxValue": 100
+          }]
+        },
+        {
+          name: "operating-hours-open",
+          title: "Open hours",
+          type: "text",
+          inputType: "time",
           isRequired: true,
         },
         {
-          name: "operating-hours",
+          name: "operating-hours-close",
           type: "text",
-          title: "What are your operating hours?",
-          inputType: "text",
+          title: "Close hours",
+          inputType: "time",
           isRequired: true,
+          validators: [
+            {
+              type: "expression",
+              expression: "{operating-hours-open} < {operating-hours-close}",
+              text: "End time must be later than start time."
+            }
+          ]
         },
       ],
     },
@@ -171,6 +199,7 @@ export const json = {
               type: "text",
               name: "email-team-member",
               title: "Email",
+
             },
             {
               type: "text",
@@ -181,6 +210,8 @@ export const json = {
               type: "text",
               name: "position-team-member",
               title: "Reasons to reach out",
+              maxLength: 500
+
             },
             {
               type: "text",
@@ -282,12 +313,42 @@ export const json = {
         },
         {
           name: "greeting-template",
-          type: "text",
+          type: "radiogroup",
           title:
             "Do you agree with the following greeting or would you like to make any changes?",
-          defaultValue: "Hi! Thank you for calling [Company Name].?",
+          description: "Hi! Thank you for calling [Company Name]. My name is [Agent\'s Name]. Please, be aware that this call may be monitored or recorded for quality assurance purposes.  How can I assist you today?",
           inputType: "text",
           isRequired: true,
+          choices: [
+            {
+              value: "yes",
+              text: {
+                default: "Yes",
+              },
+            },
+            {
+              value: "no",
+              text: {
+                default: "No",
+              },
+            },
+          ],
+        },
+        {
+          type: "text",
+          name: "greeting-own-template",
+          visibleIf: "{greeting-template} = 'no'",
+          title: {
+            default: "Write your own template:",
+          },
+          validators: [
+            {
+              type: "website",
+            },
+          ],
+          placeholder: {
+            default: "Enter your website",
+          },
         },
         {
           name: "volume-call",
@@ -378,7 +439,7 @@ export const json = {
       name: "GETTING YOU INFORMED",
       elements: [
         {
-          type: "radiogroup",
+          type: "checkbox",
           name: "receive-information",
           title: {
             default: "How would you like to receive the information from the calls?",
@@ -403,7 +464,7 @@ export const json = {
         {
           type: "text",
           name: "email-send-information",
-          visibleIf: "{receive-information} = 'email-information'",
+          visibleIf: "{receive-information} contains 'email-information'",
           isRequired: true,
           title: {
             default: "Email",
@@ -414,7 +475,7 @@ export const json = {
         {
           type: "text",
           name: "email-send-information",
-          visibleIf: "{receive-information} = 'stafi-live-interface'",
+          visibleIf: "{receive-information} contains 'stafi-live-interface'",
           isRequired: true,
           title: {
             default: "Which email/User ID would you prefer to use for accessing our Stafi Live interface? ",
