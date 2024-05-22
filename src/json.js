@@ -140,7 +140,7 @@ export const json = {
           name: "volume-call",
           type: "text",
           title: "What is your average daily call volume?",
-          inputType: "text",
+          inputType: "number",
           isRequired: true,
         },
       ],
@@ -196,7 +196,7 @@ export const json = {
             },
 
             {
-              type: "text",
+              type: "email",
               name: "email-team-member",
               title: "Email",
 
@@ -349,14 +349,7 @@ export const json = {
           placeholder: {
             default: "Enter your website",
           },
-        },
-        {
-          name: "volume-call",
-          type: "text",
-          title: "What is your average daily call volume?",
-          inputType: "text",
-          isRequired: true,
-        },
+        }
       ],
     },
     {
@@ -388,6 +381,7 @@ export const json = {
         {
           type: "text",
           name: "email",
+          inputType: "email",
           visibleIf: "{appointments} = 'yes'",
           title: {
             default: "Provide a link:",
@@ -410,7 +404,7 @@ export const json = {
           },
           validators: [
             {
-              type: "email",
+              type: "text",
             },
           ],
           placeholder: {
@@ -426,7 +420,7 @@ export const json = {
           },
           validators: [
             {
-              type: "email",
+              type: "text",
             },
           ],
           placeholder: {
