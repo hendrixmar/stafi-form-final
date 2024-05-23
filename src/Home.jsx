@@ -106,6 +106,9 @@ function Home() {
                             Creation date
                         </th>
                         <th scope="col" className="px-6 py-3">
+                            type
+                        </th>
+                        <th scope="col" className="px-6 py-3">
 
                         </th>
                         <th scope="col" className="px-6 py-3">
@@ -119,7 +122,7 @@ function Home() {
                     {data.map((item, index) => (
                         <tr key={index} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                             {
-                                ["person", "creation_date"].map(header => (
+                                ["person", "creation_date", "type"].map(header => (
                                         <td key={header} className="px-6 py-4">{item[header]}</td>
                                     )
                                 )

@@ -44,6 +44,7 @@ function SurveyComponent(props) {
       "company_name": sender.data["company_name"],
       "person" : sender.data["person-form"],
       "creation_date": formattedDateTime,
+       "type": "General form",
       "data": sender.data
     }
     fetch(url, {
